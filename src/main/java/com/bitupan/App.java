@@ -1,6 +1,7 @@
 package com.bitupan;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.amazonaws.auth.AWSCredentials;
@@ -10,6 +11,7 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.s3.model.Region;
 import com.bitupan.env.EnvironmentVariables;
 
@@ -26,7 +28,8 @@ public class App
 
 
         //load(mapper);
-        save(mapper);
+        //save(mapper);
+        query(mapper);
     }
 
     private static void load(DynamoDBMapper mapper){
@@ -43,14 +46,27 @@ public class App
         customer.put("customerId", "c2");
         customer.put("customerName", "Bitupan");
         Transaction t = new Transaction();
-        t.setTransactionId("t3");
+        t.setTransactionId("t1");
         t.setDate("22-07-2021");
-        t.setAmount(45);
+        t.setAmount(55);
         t.setType("PURCHASE");
         t.setCustomer(customer);
         mapper.save(t);
+
+        //To update we need to load the item first then set and then save the item
+        // Transaction result = mapper.load(t);
+        // result.setAmount(50);
+        // mapper.save(result);
     }
-    private static void query(DynamoDBMapper mapper){}
+    private static void query(DynamoDBMapper mapper){
+        Transaction t  = new Transaction();
+        t.setTransactionId("t1");
+
+        DynamoDBQueryExpression<Transaction> queryExpression = new DynamoDBQueryExpression<Transaction>().withHashKeyValues(t).withLimit(10);
+        List<Transaction> resultList = mapper.query(Transaction.class, queryExpression);
+        System.out.println(resultList.get(0));
+        System.out.println(resultList.get(1));
+    }   
     private static void delete(DynamoDBMapper mapper){}
 
 }
