@@ -34,6 +34,7 @@ public class Transaction {
     @DynamoDBAttribute(attributeName = "customer")
     //@DynamoDBTypeConverted(converter = CustomerTranslatior.class)
     private Map<String, String> customer;
+    //private Customer customer;
     @DynamoDBAttribute(attributeName = "type")
     private String type;
 }

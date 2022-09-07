@@ -27,9 +27,9 @@ public class App
         DynamoDBMapper mapper = new DynamoDBMapper(ddbClient);
 
 
-        //load(mapper);
+        load(mapper);
         //save(mapper);
-        query(mapper);
+        //query(mapper);
     }
 
     private static void load(DynamoDBMapper mapper){
@@ -67,6 +67,13 @@ public class App
         System.out.println(resultList.get(0));
         System.out.println(resultList.get(1));
     }   
-    private static void delete(DynamoDBMapper mapper){}
+    private static void delete(DynamoDBMapper mapper){
+        Transaction t = new Transaction();
+        t.setTransactionId("t1");
+        t.setDate("22-07-2021");
+
+        Transaction result  = mapper.load(t);
+        mapper.delete(result);
+    }
 
 }

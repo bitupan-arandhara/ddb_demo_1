@@ -26,5 +26,24 @@ public class CustomerTranslatior implements DynamoDBTypeConverter<String, Custom
             throw new RuntimeException();
         }
     }
+    // @Override
+    // public T unconvert(final Map<String,AttributeValue> object) {
+    // final T result = StandardBeanProperties.DeclaringReflect.<T>newInstance(targetType);
+    // if (!object.isEmpty()) {
+    //     for (final DynamoDBMapperFieldModel<T,Object> field : fields()) {
+    //         try {
+    //             final AttributeValue value = object.get(field.name());
+    //             if (value != null) {
+    //                 field.unconvertAndSet(result, value);
+    //             }
+    //         } catch (final RuntimeException e) {
+    //             throw new DynamoDBMappingException(
+    //                 targetType.getSimpleName() + "[" + field.name() + "]; could not unconvert attribute", e
+    //             );
+    //         }
+    //     }
+    // }
+    // return result;
+    // }
     
 }
